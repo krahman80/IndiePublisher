@@ -1,0 +1,15 @@
+/Users/rahman/Documents/Projects/IndiePublisher/PublisherData/bin/Debug/net6.0/PublisherData.deps.json
+/Users/rahman/Documents/Projects/IndiePublisher/PublisherData/bin/Debug/net6.0/PublisherData.dll
+/Users/rahman/Documents/Projects/IndiePublisher/PublisherData/bin/Debug/net6.0/PublisherData.pdb
+/Users/rahman/Documents/Projects/IndiePublisher/PublisherData/bin/Debug/net6.0/PublisherDomain.dll
+/Users/rahman/Documents/Projects/IndiePublisher/PublisherData/bin/Debug/net6.0/PublisherDomain.pdb
+/Users/rahman/Documents/Projects/IndiePublisher/PublisherData/obj/Debug/net6.0/PublisherData.csproj.AssemblyReference.cache
+/Users/rahman/Documents/Projects/IndiePublisher/PublisherData/obj/Debug/net6.0/PublisherData.GeneratedMSBuildEditorConfig.editorconfig
+/Users/rahman/Documents/Projects/IndiePublisher/PublisherData/obj/Debug/net6.0/PublisherData.AssemblyInfoInputs.cache
+/Users/rahman/Documents/Projects/IndiePublisher/PublisherData/obj/Debug/net6.0/PublisherData.AssemblyInfo.cs
+/Users/rahman/Documents/Projects/IndiePublisher/PublisherData/obj/Debug/net6.0/PublisherData.csproj.CoreCompileInputs.cache
+/Users/rahman/Documents/Projects/IndiePublisher/PublisherData/obj/Debug/net6.0/PublisherData.csproj.CopyComplete
+/Users/rahman/Documents/Projects/IndiePublisher/PublisherData/obj/Debug/net6.0/PublisherData.dll
+/Users/rahman/Documents/Projects/IndiePublisher/PublisherData/obj/Debug/net6.0/refint/PublisherData.dll
+/Users/rahman/Documents/Projects/IndiePublisher/PublisherData/obj/Debug/net6.0/PublisherData.pdb
+/Users/rahman/Documents/Projects/IndiePublisher/PublisherData/obj/Debug/net6.0/ref/PublisherData.dll
