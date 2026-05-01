@@ -126,3 +126,12 @@ void QueryAggregate()
 }
 
 #endregion
+
+#region Tracking Or No Tracking Querys
+
+// AsNoTracking() return query as a query, not a DbSet
+// can't append DbSet method such as find AsNoTracking however you can use linq method.
+var author = _context.Authors.AsNoTracking().FirstOrDefault();
+
+
+#endregion
