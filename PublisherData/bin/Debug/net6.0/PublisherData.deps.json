@@ -9,7 +9,7 @@
       "PublisherData/1.0.0": {
         "dependencies": {
           "Microsoft.EntityFrameworkCore.Sqlite": "6.0.36",
-          "PublisherDomain": "1.0.0.0"
+          "PublisherDomain": "1.0.0"
         },
         "runtime": {
           "PublisherData.dll": {}
@@ -388,12 +388,9 @@
           }
         }
       },
-      "PublisherDomain/1.0.0.0": {
+      "PublisherDomain/1.0.0": {
         "runtime": {
-          "PublisherDomain.dll": {
-            "assemblyVersion": "1.0.0.0",
-            "fileVersion": "1.0.0.0"
-          }
+          "PublisherDomain.dll": {}
         }
       }
     }
@@ -600,8 +597,8 @@
       "path": "system.text.json/6.0.11",
       "hashPath": "system.text.json.6.0.11.nupkg.sha512"
     },
-    "PublisherDomain/1.0.0.0": {
-      "type": "reference",
+    "PublisherDomain/1.0.0": {
+      "type": "project",
       "serviceable": false,
       "sha512": ""
     }

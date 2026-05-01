@@ -14,7 +14,9 @@ PubContext _context = new PubContext();
 //SkipAndTakeAuthors();
 //SortAuthors();
 //SortAuthor2();
-AuthorFilterAndSort();
+//AuthorFilterAndSort();
+QueryAggregate();
+
 
 #region Filtering
 
@@ -97,6 +99,30 @@ void AuthorFilterAndSort()
         .OrderByDescending(a => a.FirstName).ToList();
 
     authorFilterAndSort.ForEach(a => Console.WriteLine(a.LastName + ", " + a.FirstName));
+}
+
+#endregion
+
+#region Aggregate
+
+void QueryAggregate()
+{
+    // from this filtering query
+    //var authors = _context.Authors.Where(a => a.LastName == "Lerman").ToList();
+
+    // using FirstOrDefault 
+    //var author = _context.Authors.FirstOrDefault(a=> a.LastName=="Lerman");
+
+    var author = _context.Authors.OrderByDescending(a => a.FirstName).FirstOrDefault(a => a.LastName == "Lerman");
+
+    if (author != null)
+    {
+        Console.WriteLine(author.FirstName + " " + author.LastName);
+    }
+    
+
+    // this one is error in runtime
+    //var auth = _context.Authors.LastOrDefault(a => a.LastName == "Lerman");
 }
 
 #endregion

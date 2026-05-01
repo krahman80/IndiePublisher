@@ -531,6 +531,16 @@
         "build": {
           "buildTransitive/netcoreapp3.1/System.Text.Json.targets": {}
         }
+      },
+      "PublisherDomain/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "compile": {
+          "bin/placeholder/PublisherDomain.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/PublisherDomain.dll": {}
+        }
       }
     }
   },
@@ -1176,11 +1186,17 @@
         "system.text.json.nuspec",
         "useSharedDesignerContext.txt"
       ]
+    },
+    "PublisherDomain/1.0.0": {
+      "type": "project",
+      "path": "../PublisherDomain/PublisherDomain.csproj",
+      "msbuildProject": "../PublisherDomain/PublisherDomain.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net6.0": [
-      "Microsoft.EntityFrameworkCore.Sqlite >= 6.0.36"
+      "Microsoft.EntityFrameworkCore.Sqlite >= 6.0.36",
+      "PublisherDomain >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -1207,7 +1223,11 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "/Users/rahman/Documents/Projects/IndiePublisher/PublisherDomain/PublisherDomain.csproj": {
+              "projectPath": "/Users/rahman/Documents/Projects/IndiePublisher/PublisherDomain/PublisherDomain.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
