@@ -15,7 +15,8 @@ PubContext _context = new PubContext();
 //SortAuthors();
 //SortAuthor2();
 //AuthorFilterAndSort();
-QueryAggregate();
+//QueryAggregate();
+//InsertAuthor();
 
 
 #region Filtering
@@ -135,3 +136,18 @@ var author = _context.Authors.AsNoTracking().FirstOrDefault();
 
 
 #endregion
+
+#region Inserting simple object
+// Add from DbSet or DbContext
+// DbSet -> _context.Authors.Add(..)
+// DbContext -> _context.Add(..)
+
+void InsertAuthor()
+{
+    var author = new Author { FirstName = "Frank", LastName = "Herber" };
+    _context.Authors.Add(author);
+    _context.SaveChanges();
+}
+
+#endregion
+
