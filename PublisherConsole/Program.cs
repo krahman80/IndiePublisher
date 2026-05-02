@@ -20,7 +20,8 @@ PubContext _context = new PubContext();
 //RetrieveAndUpdateAuthor();
 //RetrieveAndUpdateMultipleAuthors();
 //VariousOperations();
-CoordinatedRetrieveAndUpdateAuthor();
+//CoordinatedRetrieveAndUpdateAuthor();
+DeleteAnAuthor();
 
 #region Filtering
 
@@ -222,3 +223,13 @@ void SaveThatAuthor(Author author)
 }
 
 #endregion
+
+void DeleteAnAuthor()
+{
+    var extraJL = _context.Authors.Find(2);
+    if (extraJL!=null)
+    {
+        _context.Authors.Remove(extraJL);
+        _context.SaveChanges();
+    }
+}
