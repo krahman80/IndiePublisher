@@ -17,7 +17,9 @@ PubContext _context = new PubContext();
 //AuthorFilterAndSort();
 //QueryAggregate();
 //InsertAuthor();
-
+//RetrieveAndUpdateAuthor();
+//RetrieveAndUpdateMultipleAuthors();
+VariousOperations();
 
 #region Filtering
 
@@ -151,3 +153,44 @@ void InsertAuthor()
 
 #endregion
 
+#region Update Data
+
+// Retrieve and Update Author
+void RetrieveAndUpdateAuthor()
+{
+    var author = _context.Authors.FirstOrDefault(a => a.FirstName == "Julie" && a.LastName == "Lerman");
+    if (author != null)
+    {
+        author.FirstName = "Julia";
+        _context.SaveChanges();
+    }
+}
+
+// Retrieve and Update Multiple Author
+void RetrieveAndUpdateMultipleAuthors()
+{
+    var LermanAuthors = _context.Authors.Where(a => a.LastName == "Lehrman").ToList();
+    foreach (var la in LermanAuthors)
+    {
+        la.LastName = "Lerman";
+    }
+
+    Console.WriteLine("Before:" + _context.ChangeTracker.DebugView.ShortView);
+    _context.ChangeTracker.DetectChanges();
+    Console.WriteLine("After:" + _context.ChangeTracker.DebugView.ShortView
+        );
+
+    _context.SaveChanges();
+}
+
+// Various Operations
+void VariousOperations()
+{
+    var author = _context.Authors.Find(1);
+    author.LastName = "Newfoundland";
+    var newauthor = new Author { LastName = "Appleman", FirstName = "Dan" };
+    _context.Authors.Add(newauthor);
+    _context.SaveChanges();
+}
+
+#endregion
