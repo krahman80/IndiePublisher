@@ -19,7 +19,8 @@ PubContext _context = new PubContext();
 //InsertAuthor();
 //RetrieveAndUpdateAuthor();
 //RetrieveAndUpdateMultipleAuthors();
-VariousOperations();
+//VariousOperations();
+CoordinatedRetrieveAndUpdateAuthor();
 
 #region Filtering
 
@@ -191,6 +192,33 @@ void VariousOperations()
     var newauthor = new Author { LastName = "Appleman", FirstName = "Dan" };
     _context.Authors.Add(newauthor);
     _context.SaveChanges();
+}
+
+#endregion
+
+#region Updating Untracked Object
+
+void CoordinatedRetrieveAndUpdateAuthor()
+{
+    var author = FindThatAuthor(3);
+    if(author?.FirstName=="Julie")
+    {
+        author.FirstName = "Julia";
+        SaveThatAuthor(author);
+    }
+}
+
+Author FindThatAuthor(int authorId)
+{
+    using var shortLivedContect = new PubContext();
+    return shortLivedContect.Authors.Find(authorId);
+}
+
+void SaveThatAuthor(Author author)
+{
+    using var anotherShortLivedContext = new PubContext();
+    anotherShortLivedContext.Authors.Update(author);
+    anotherShortLivedContext.SaveChanges();
 }
 
 #endregion
