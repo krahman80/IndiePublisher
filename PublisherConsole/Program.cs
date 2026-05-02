@@ -21,7 +21,8 @@ PubContext _context = new PubContext();
 //RetrieveAndUpdateMultipleAuthors();
 //VariousOperations();
 //CoordinatedRetrieveAndUpdateAuthor();
-DeleteAnAuthor();
+//DeleteAnAuthor();
+InsertMultipleAuthors();
 
 #region Filtering
 
@@ -224,6 +225,8 @@ void SaveThatAuthor(Author author)
 
 #endregion
 
+#region Delete Objects
+
 void DeleteAnAuthor()
 {
     var extraJL = _context.Authors.Find(2);
@@ -233,3 +236,45 @@ void DeleteAnAuthor()
         _context.SaveChanges();
     }
 }
+
+#endregion
+
+#region Insert multiple Object
+
+void InsertMultipleAuthors()
+{
+    var newAuthors = new Author[]{
+       new Author { FirstName = "Ruth", LastName = "Ozeki" },
+       new Author { FirstName = "Sofia", LastName = "Segovia" },
+       new Author { FirstName = "Ursula K.", LastName = "LeGuin" },
+       new Author { FirstName = "Hugh", LastName = "Howey" },
+       new Author { FirstName = "Isabelle", LastName = "Allende" }
+    };
+    _context.AddRange(newAuthors);
+    _context.SaveChanges();
+}
+
+void InsertMultipleAuthorPassedId(List<Author> listOfAuthors)
+{
+    _context.Authors.AddRange(listOfAuthors);
+    _context.SaveChanges();
+}
+
+void BulkUpdate()
+{
+    var newAuthors = new Author[]{
+    new Author {FirstName = "Tsitsi", LastName = "Dangarembga" },
+    new Author { FirstName = "Lisa", LastName = "See" },
+    new Author { FirstName = "Zhang", LastName = "Ling" },
+    new Author { FirstName = "Marilynne", LastName="Robinson"}
+    };
+    _context.Authors.AddRange(newAuthors);
+
+    //add another query
+    var book = _context.Books.Find(2);
+    book.Title = "Programming Entity Framework 2nd Edition";
+
+    //save all changes
+    _context.SaveChanges();
+}
+#endregion
