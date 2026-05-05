@@ -4,15 +4,23 @@ using PublisherDomain;
 namespace PublisherData;
 public class PubContext:DbContext
 {
+    StreamWriter _writer = new StreamWriter("EFCoreLog.txt", append: true);
+
     public DbSet<Author> Authors { get; set; }
     public DbSet<Book> Books { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseSqlite("Data Source=PublisherData.db").LogTo(Console.WriteLine, new[] {DbLoggerCategory.Database.Command.Name}, Microsoft.Extensions.Logging.LogLevel.Information).EnableSensitiveDataLogging();
+        optionsBuilder.UseSqlite("Data Source=PublisherData.db").LogTo(_writer.WriteLine, new[] {DbLoggerCategory.Database.Command.Name}, Microsoft.Extensions.Logging.LogLevel.Information).EnableSensitiveDataLogging();
 
         //in case using sqlserver 
         //optionsBuilder.UseSqlite("Data Source=PublisherData.db").UseQueryTrackingBehavior.NoTracking;
+    }
+
+    public override void Dispose()
+    {
+        base.Dispose();
+        _writer.Dispose();
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
