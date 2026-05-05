@@ -9,7 +9,7 @@ public class PubContext:DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseSqlite("Data Source=PublisherData.db");
+        optionsBuilder.UseSqlite("Data Source=PublisherData.db").LogTo(Console.WriteLine);
 
         //in case using sqlserver 
         //optionsBuilder.UseSqlite("Data Source=PublisherData.db").UseQueryTrackingBehavior.NoTracking;

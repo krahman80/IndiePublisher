@@ -22,7 +22,21 @@ PubContext _context = new PubContext();
 //VariousOperations();
 //CoordinatedRetrieveAndUpdateAuthor();
 //DeleteAnAuthor();
-InsertMultipleAuthors();
+//InsertMultipleAuthors();
+
+GetAuthors();
+
+void GetAuthors()
+{
+    var authors = _context.Authors.ToList();
+    if (authors!=null)
+    {
+        foreach (var author in authors)
+        {
+            Console.WriteLine(author.AuthorId + " " + author.FirstName);
+        }
+    }
+}
 
 #region Filtering
 
