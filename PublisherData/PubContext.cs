@@ -35,6 +35,15 @@ public class PubContext:DbContext
             new Book {BookId = 3, AuthorId=3, Title = "The Left Hand of Darkness", PublishDate=(DateTime)new DateTime(1969,3,1)}
         };
         modelBuilder.Entity<Book>().HasData(someBooks);
+
+        //example of mapping an unconventional FK
+        //since I have the author prop in books, I am
+        //using it in WithOne:
+        //modelBuilder.Entity<Author>()
+        //    .HasMany(a => a.Books)
+        //    .WithOne(b => b.Author)
+        //    .HasForeignKey(b => b.AuthorFK);
+
     }
 }
 

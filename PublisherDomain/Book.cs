@@ -7,10 +7,10 @@
         public DateTime PublishDate { get; set; }
         public decimal BasePrice { get; set; }
 
-        // author navigation property inference by ef core
+        //author navigation property inference by ef core
         public Author Author { get; set; }
 
-        // this is foreign key
+        //this is foreign key
         public int AuthorId { get; set; }
 
     }
