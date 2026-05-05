@@ -43,7 +43,7 @@ void QueryFiltersLike()
 
     foreach (var author in authors)
     {
-        Console.WriteLine(author.Id + "." +author.FirstName + " " + author.LastName);
+        Console.WriteLine(author.AuthorId + "." +author.FirstName + " " + author.LastName);
     }
 }
 
