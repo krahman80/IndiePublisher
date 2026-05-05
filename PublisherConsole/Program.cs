@@ -28,7 +28,9 @@ GetAuthors();
 
 void GetAuthors()
 {
-    var authors = _context.Authors.ToList();
+    //var authors = _context.Authors.ToList();
+    var name = "Ozeki";
+    var authors = _context.Authors.Where(a => a.LastName == name).ToList();
     if (authors!=null)
     {
         foreach (var author in authors)
