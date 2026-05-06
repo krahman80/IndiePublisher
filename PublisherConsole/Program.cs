@@ -23,22 +23,11 @@ PubContext _context = new PubContext();
 //CoordinatedRetrieveAndUpdateAuthor();
 //DeleteAnAuthor();
 //InsertMultipleAuthors();
-
-GetAuthors();
-
-void GetAuthors()
-{
-    //var authors = _context.Authors.ToList();
-    var name = "Ozeki";
-    var authors = _context.Authors.Where(a => a.LastName == name).ToList();
-    if (authors!=null)
-    {
-        foreach (var author in authors)
-        {
-            Console.WriteLine(author.AuthorId + " " + author.FirstName);
-        }
-    }
-}
+//GetAuthors();
+//InsertNewAuthorWithNewBook();
+//InserNewAuthorWith2NewBooks();
+//AddNewBookToExistingAuthorInMemory();
+AddNewBookToExistingAuthorInMemoryViaBook();
 
 #region Filtering
 
@@ -291,6 +280,80 @@ void BulkUpdate()
     book.Title = "Programming Entity Framework 2nd Edition";
 
     //save all changes
+    _context.SaveChanges();
+}
+#endregion
+
+#region Demo Logging
+
+void GetAuthors()
+{
+    //var authors = _context.Authors.ToList();
+    var name = "Ozeki";
+    var authors = _context.Authors.Where(a => a.LastName == name).ToList();
+    if (authors != null)
+    {
+        foreach (var author in authors)
+        {
+            Console.WriteLine(author.AuthorId + " " + author.FirstName);
+        }
+    }
+}
+
+#endregion
+
+#region Inserting Related Data
+
+//insert book from author graph using _context
+void InsertNewAuthorWithNewBook()
+{
+    var author = new Author { FirstName = "Lynda", LastName = "RutLedge" };
+    author.Books.Add(
+        new Book {
+            Title = "West With Giraffes",
+            PublishDate = new DateTime(2021, 2, 1)
+        });
+    _context.Authors.Add(author);
+    _context.SaveChanges();
+}
+
+//insert multiple book from author graph using _context
+void InserNewAuthorWith2NewBooks()
+{
+    var author = new Author { FirstName = "Don", LastName = "Jones" };
+    author.Books.AddRange(new List<Book>
+    {
+        new Book {Title = "The Never", PublishDate = new DateTime(2019, 12, 1)},
+        new Book {Title = "Alabaster", PublishDate = new DateTime(2019, 4, 1)}
+    });
+    _context.Authors.Add(author);
+    _context.SaveChanges();
+}
+
+//inserting book for the already exist author in the database
+//using saveChanges
+void AddNewBookToExistingAuthorInMemory()
+{
+    var author = _context.Authors.FirstOrDefault(a => a.LastName == "Howey");
+    if (author!=null)
+    {
+        author.Books.Add(new Book { Title = "Wool", PublishDate = new DateTime(2012, 1, 1) });
+    }
+    _context.SaveChanges();
+}
+
+void AddNewBookToExistingAuthorInMemoryViaBook()
+{
+    var book = new Book
+    {
+        Title = "shift",
+        PublishDate = new DateTime(2012, 1, 1),
+        // add foreign key here instead
+        AuthorId = 5
+    };
+    //comment this, add one line above
+    //book.Author = _context.Authors.Find(5); //id for Hugh Howey
+    _context.Books.Add(book);
     _context.SaveChanges();
 }
 #endregion
