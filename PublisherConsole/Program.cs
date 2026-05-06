@@ -27,7 +27,8 @@ PubContext _context = new PubContext();
 //InsertNewAuthorWithNewBook();
 //InserNewAuthorWith2NewBooks();
 //AddNewBookToExistingAuthorInMemory();
-AddNewBookToExistingAuthorInMemoryViaBook();
+//AddNewBookToExistingAuthorInMemoryViaBook();
+EagerLoadBooksWithAuthors();
 
 #region Filtering
 
@@ -356,4 +357,29 @@ void AddNewBookToExistingAuthorInMemoryViaBook()
     _context.Books.Add(book);
     _context.SaveChanges();
 }
+#endregion
+
+#region Eager Loading Related Data In Queries
+//using DbSet Include method to query related data
+
+void EagerLoadBooksWithAuthors()
+{
+
+    //var authors = _context.Authors.Include(a => a.Books).ToList();
+
+    //adding filtering
+    var pubDateStart = new DateTime(2010, 1, 1);
+    var authors = _context.Authors
+        .Include(a => a.Books
+                    .Where(b => b.PublishDate >= pubDateStart)
+                    .OrderBy(b => b.Title))
+        .ToList();
+
+    authors.ForEach(a =>
+    {
+        Console.WriteLine($"{a.LastName} ({a.Books.Count})");
+        a.Books.ForEach(b => Console.WriteLine("    " + b.Title));
+    });
+}
+
 #endregion
