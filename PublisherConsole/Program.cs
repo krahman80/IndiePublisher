@@ -28,7 +28,11 @@ PubContext _context = new PubContext();
 //InserNewAuthorWith2NewBooks();
 //AddNewBookToExistingAuthorInMemory();
 //AddNewBookToExistingAuthorInMemoryViaBook();
-EagerLoadBooksWithAuthors();
+//EagerLoadBooksWithAuthors();
+//Projections();
+//ModifyingRelatedDataWhenTracked();
+//ModifyingRelatedDataWhenNotTracked();
+CascadeDeleteInActionWhenTracked();
 
 #region Filtering
 
@@ -382,4 +386,89 @@ void EagerLoadBooksWithAuthors()
     });
 }
 
+//Query projection
+//Projection into undefined ("Anonymous") Type
+void Projections()
+{
+    //Anonymous types are not tracked
+    var unknounTypes = _context.Authors
+    .Select(a => new
+    {
+        AuthorId = a.AuthorId,
+        Name = a.FirstName.First() + "" + a.LastName,
+        Books = a.Books
+    }).ToList();
+
+   var debugview = _context.ChangeTracker.DebugView.ShortView;
+}
+
+//Loading related data for objects Already in Memory
+//explisit loading
+void ExplicitLoadCollection()
+{
+    var author = _context.Authors.FirstOrDefault(a => a.LastName == "Howey");
+    _context.Entry(author).Collection(a => a.Books).Load();
+
+    //filter on loading using Query() method
+    var newfBook = _context.Entry(author).Collection(a => a.Books)
+        .Query().Where(b => b.Title.Contains("Newf")).ToList();
+}
+
+//using lazy loading to retrieve related data
+void LazyLoadBooksFromAnAuthor()
+{
+    //requires lazy loading to be setup in your app
+    var author = _context.Authors.FirstOrDefault(a => a.LastName == "Howey");
+    foreach (var book in author.Books)
+    {
+        Console.WriteLine(book.Title);
+    }
+
+    //enabling lazy loading
+    //every navigation in every entity must be virtual
+    //e.g public virtual List<Book> Books { get; set; }
+}
+
+//using related data to filter object
+void FilterUsingRelatedData()
+{
+    var recentAuthor = _context.Authors
+        .Where(a => a.Books.Any(b => b.PublishDate.Year >= 2015))
+        .ToList();
+}
+
+//Modifying related data
+void ModifyingRelatedDataWhenTracked()
+{
+    var author = _context.Authors.Include(a => a.Books)
+        .FirstOrDefault(a => a.AuthorId == 5);
+    //author.Books[0].BasePrice = (decimal)10.00;
+    author.Books.Remove(author.Books[1]);
+    _context.ChangeTracker.DetectChanges();
+    var state = _context.ChangeTracker.DebugView.ShortView;
+}
+
+void ModifyingRelatedDataWhenNotTracked()
+{
+    var author = _context.Authors.Include(a => a.Books)
+        .FirstOrDefault(a => a.AuthorId == 5);
+    author.Books[0].BasePrice = (decimal)12.00;
+
+    var newContext = new PubContext();
+    //this will be make all the field updated
+    //newContext.Books.Update(author.Books[0]);
+
+    newContext.Entry(author.Books[0]).State = EntityState.Modified;
+    var state = newContext.ChangeTracker.DebugView.ShortView;
+    newContext.SaveChanges();
+}
+
+void CascadeDeleteInActionWhenTracked()
+{
+    var author = _context.Authors.Include(a => a.Books)
+        .FirstOrDefault(a => a.AuthorId == 9);
+    _context.Authors.Remove(author);
+    var state = _context.ChangeTracker.DebugView.ShortView;
+    _context.SaveChanges();
+}
 #endregion
