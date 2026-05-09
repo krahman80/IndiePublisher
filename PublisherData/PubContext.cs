@@ -14,7 +14,7 @@ public class PubContext:DbContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         //show text to console
-        optionsBuilder.UseSqlite("Data Source=PublisherData.db").LogTo(Console.WriteLine, new[] {DbLoggerCategory.Database.Command.Name}, Microsoft.Extensions.Logging.LogLevel.Information).EnableSensitiveDataLogging();
+        optionsBuilder.UseSqlServer("Data Source=localhost,1433;Database=IndiePubDB;User ID=SA;Password=Password123;Pooling=False;Trust Server Certificate=True;Authentication=SqlPassword").LogTo(Console.WriteLine, new[] {DbLoggerCategory.Database.Command.Name}, Microsoft.Extensions.Logging.LogLevel.Information).EnableSensitiveDataLogging();
 
         //save log to text
         //optionsBuilder.UseSqlite("Data Source=PublisherData.db").LogTo(_writer.WriteLine, new[] {DbLoggerCategory.Database.Command.Name}, Microsoft.Extensions.Logging.LogLevel.Information).EnableSensitiveDataLogging();
@@ -43,12 +43,29 @@ public class PubContext:DbContext
         };
         modelBuilder.Entity<Author>().HasData(authorList);
 
-        var someBooks = new Book[] {
+        var someBooks = new Book[]{
             new Book {BookId = 1, AuthorId=1, Title = "In God's Ear", PublishDate= new DateTime(1989,3,1) },
             new Book {BookId = 2, AuthorId=2, Title = "A Tale For the Time Being", PublishDate = new DateTime(2013,12,31) },
             new Book {BookId = 3, AuthorId=3, Title = "The Left Hand of Darkness", PublishDate=(DateTime)new DateTime(1969,3,1)}
         };
+        modelBuilder.Entity<Book>().Property(b => b.BasePrice)
+    .HasColumnType("decimal(18,2)");
         modelBuilder.Entity<Book>().HasData(someBooks);
+
+
+        var someArtists = new Artist[]{
+            new Artist {ArtistId = 1, FirstName = "Pablo", LastName="Picasso"},
+            new Artist {ArtistId = 2, FirstName = "Dee", LastName="Bell"},
+            new Artist {ArtistId = 3, FirstName ="Katharine", LastName="Kuharic"}
+        };
+        modelBuilder.Entity<Artist>().HasData(someArtists);
+
+        var someCover = new Cover[] {
+            new Cover {CoverId = 1, DesignIdeas="How about a left hand in the dark?", DigitalOnly=false},
+            new Cover {CoverId = 2, DesignIdeas= "Should we put a clock?", DigitalOnly=true},
+            new Cover {CoverId = 3, DesignIdeas="A big ear in the clouds?", DigitalOnly = false}
+        };
+        modelBuilder.Entity<Cover>().HasData(someCover);
 
         //example of mapping an unconventional FK
         //since I have the author prop in books, I am

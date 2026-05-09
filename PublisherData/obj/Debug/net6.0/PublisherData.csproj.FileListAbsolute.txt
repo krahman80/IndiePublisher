@@ -13,3 +13,5 @@
 /Users/rahman/Documents/Projects/IndiePublisher/PublisherData/obj/Debug/net6.0/refint/PublisherData.dll
 /Users/rahman/Documents/Projects/IndiePublisher/PublisherData/obj/Debug/net6.0/PublisherData.pdb
 /Users/rahman/Documents/Projects/IndiePublisher/PublisherData/obj/Debug/net6.0/ref/PublisherData.dll
+/Users/rahman/Documents/Projects/IndiePublisher/PublisherData/bin/Debug/net6.0/PublisherData.runtimeconfig.json
+/Users/rahman/Documents/Projects/IndiePublisher/PublisherData/obj/Debug/net6.0/PublisherData.genruntimeconfig.cache

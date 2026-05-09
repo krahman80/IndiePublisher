@@ -17,17 +17,17 @@ namespace PublisherData.Migrations
             migrationBuilder.InsertData(
                 table: "Books",
                 columns: new[] { "BookId", "AuthorId", "BasePrice", "PublishDate", "Title" },
-                values: new object[] { 1, 1, 0m, new DateTime(1989, 3, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "In God's Ear" });
+                values: new object[] { 1, 1, 0m, new DateTime(1989, 3, 1, 0, 0, 0, DateTimeKind.Unspecified), "In God's Ear" });
 
             migrationBuilder.InsertData(
                 table: "Books",
                 columns: new[] { "BookId", "AuthorId", "BasePrice", "PublishDate", "Title" },
-                values: new object[] { 2, 2, 0m, new DateTime(2013, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified), "A Tale For the Time Being" });
+                values: new object[] { 2, 2, 0m, new DateTime(2013, 12, 31, 0, 0, 0, DateTimeKind.Unspecified), "A Tale For the Time Being" });
 
             migrationBuilder.InsertData(
                 table: "Books",
                 columns: new[] { "BookId", "AuthorId", "BasePrice", "PublishDate", "Title" },
-                values: new object[] { 3, 3, 0m, new DateTime(1969, 3, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "The Left Hand of Darkness" });
+                values: new object[] { 3, 3, 0m, new DateTime(1969, 3, 1, 0, 0, 0, DateTimeKind.Unspecified), "The Left Hand of Darkness" });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

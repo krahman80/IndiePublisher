@@ -20,103 +20,103 @@ namespace PublisherData.Migrations
             modelBuilder.HasAnnotation("ProductVersion", "6.0.36");
 
             modelBuilder.Entity("PublisherDomain.Author", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+            {
+                b.Property<int>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("int");
 
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                b.Property<string>("FirstName")
+                    .IsRequired()
+                    .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                b.Property<string>("LastName")
+                    .IsRequired()
+                    .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                b.HasKey("Id");
 
-                    b.ToTable("Authors");
+                b.ToTable("Authors");
 
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            FirstName = "Rhoda",
-                            LastName = "Lerman"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            FirstName = "Ruth",
-                            LastName = "Ozeki"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            FirstName = "Sofia",
-                            LastName = "Segovia"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            FirstName = "Ursula K.",
-                            LastName = "LeGuin"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            FirstName = "Hugh",
-                            LastName = "Howey"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            FirstName = "Isabelle",
-                            LastName = "Allende"
-                        });
-                });
-
-            modelBuilder.Entity("PublisherDomain.Book", b =>
-                {
-                    b.Property<int>("BookId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("AuthorId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<decimal>("BasePrice")
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime>("PublishDate")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("BookId");
-
-                    b.HasIndex("AuthorId");
-
-                    b.ToTable("Books");
-                });
+                b.HasData(
+                    new
+                    {
+                        Id = 1,
+                        FirstName = "Rhoda",
+                        LastName = "Lerman"
+                    },
+                    new
+                    {
+                        Id = 2,
+                        FirstName = "Ruth",
+                        LastName = "Ozeki"
+                    },
+                    new
+                    {
+                        Id = 3,
+                        FirstName = "Sofia",
+                        LastName = "Segovia"
+                    },
+                    new
+                    {
+                        Id = 4,
+                        FirstName = "Ursula K.",
+                        LastName = "LeGuin"
+                    },
+                    new
+                    {
+                        Id = 5,
+                        FirstName = "Hugh",
+                        LastName = "Howey"
+                    },
+                    new
+                    {
+                        Id = 6,
+                        FirstName = "Isabelle",
+                        LastName = "Allende"
+                    });
+            });
 
             modelBuilder.Entity("PublisherDomain.Book", b =>
-                {
-                    b.HasOne("PublisherDomain.Author", "Author")
-                        .WithMany("Books")
-                        .HasForeignKey("AuthorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+            {
+                b.Property<int>("BookId")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("int");
 
-                    b.Navigation("Author");
-                });
+                b.Property<int>("AuthorId")
+                    .HasColumnType("int");
+
+                b.Property<decimal>("BasePrice")
+                    .HasColumnType("decimal(18,2)");
+
+                b.Property<DateTime>("PublishDate")
+                    .HasColumnType("datetime2");
+
+                b.Property<string>("Title")
+                    .IsRequired()
+                    .HasColumnType("nvarchar(max)");
+
+                b.HasKey("BookId");
+
+                b.HasIndex("AuthorId");
+
+                b.ToTable("Books");
+            });
+
+            modelBuilder.Entity("PublisherDomain.Book", b =>
+            {
+                b.HasOne("PublisherDomain.Author", "Author")
+                    .WithMany("Books")
+                    .HasForeignKey("AuthorId")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
+
+                b.Navigation("Author");
+            });
 
             modelBuilder.Entity("PublisherDomain.Author", b =>
-                {
-                    b.Navigation("Books");
-                });
+            {
+                b.Navigation("Books");
+            });
 #pragma warning restore 612, 618
         }
     }

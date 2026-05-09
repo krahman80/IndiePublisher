@@ -32,8 +32,10 @@ PubContext _context = new PubContext();
 //Projections();
 //ModifyingRelatedDataWhenTracked();
 //ModifyingRelatedDataWhenNotTracked();
-CascadeDeleteInActionWhenTracked();
+//CascadeDeleteInActionWhenTracked();
+ConnectExistingArtistAndCoverObjects();
 
+//All the function start Here
 #region Filtering
 
 // Filtering authors
@@ -471,4 +473,19 @@ void CascadeDeleteInActionWhenTracked()
     var state = _context.ChangeTracker.DebugView.ShortView;
     _context.SaveChanges();
 }
+#endregion
+
+#region Joining Object in Many to Many Relation
+
+void ConnectExistingArtistAndCoverObjects()
+{
+    var artistA = _context.Artists.Find(1);
+    var artistB = _context.Artists.Find(2);
+    var coverA = _context.Covers.Find(1);
+
+    coverA.Artists.Add(artistA);
+    coverA.Artists.Add(artistB);
+    _context.SaveChanges();
+}
+
 #endregion

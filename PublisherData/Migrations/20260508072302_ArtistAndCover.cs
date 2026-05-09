@@ -12,10 +12,10 @@ namespace PublisherData.Migrations
                 name: "Artists",
                 columns: table => new
                 {
-                    ArtistId = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    FirstName = table.Column<string>(type: "TEXT", nullable: false),
-                    LastName = table.Column<string>(type: "TEXT", nullable: false)
+                    ArtistId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -26,10 +26,10 @@ namespace PublisherData.Migrations
                 name: "Covers",
                 columns: table => new
                 {
-                    CoverId = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    DesignIdeas = table.Column<string>(type: "TEXT", nullable: false),
-                    DigitalOnly = table.Column<bool>(type: "INTEGER", nullable: false)
+                    CoverId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    DesignIdeas = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DigitalOnly = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -40,8 +40,8 @@ namespace PublisherData.Migrations
                 name: "ArtistCover",
                 columns: table => new
                 {
-                    ArtistsArtistId = table.Column<int>(type: "INTEGER", nullable: false),
-                    CoversCoverId = table.Column<int>(type: "INTEGER", nullable: false)
+                    ArtistsArtistId = table.Column<int>(type: "int", nullable: false),
+                    CoversCoverId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -64,6 +64,7 @@ namespace PublisherData.Migrations
                 name: "IX_ArtistCover_CoversCoverId",
                 table: "ArtistCover",
                 column: "CoversCoverId");
+
             migrationBuilder.CreateIndex(
                 name: "IX_ArtistCover_ArtistsArtistId",
                 table: "ArtistCover",
