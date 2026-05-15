@@ -13,5 +13,7 @@
         //this is foreign key
         public int AuthorId { get; set; }
 
+        //add navigation property to cover
+        public Cover Cover { get; set; }
     }
 }

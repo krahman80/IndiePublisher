@@ -11,6 +11,12 @@ namespace PublisherDomain
 		public string DesignIdeas { get; set; }
 		public bool DigitalOnly { get; set; }
 		public List<Artist> Artists { get; set; }
+
+		//navigation property to book
+		public Book Book { get; set; }
+		//fk key of book
+		public int BookId { get; set; }
+
 	}
 }
 

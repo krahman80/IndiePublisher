@@ -38,9 +38,14 @@ PubContext _context = new PubContext();
 //CreateNewCoverAndArtistTogether();
 //RetrieveAnArtistWithTheirCovers();
 //RetrieveAllArtistWhoHaveCovers();
-UnAssignAnArtistFromCover();
+//UnAssignAnArtistFromCover();
+//GetAllBooksWithTheirCovers();
+//MultiLevelInclude();
+//newBookAndCover();
+//AddCoverToExistingBookThatHasAnUnTrackedCover();
+AddCoverToExistingBookWithTrackedCover();
 
-
+Console.WriteLine("The Program End");
 //All the function start Here
 #region Filtering
 
@@ -589,4 +594,114 @@ void ReassignACover()
     _context.ChangeTracker.DetectChanges();
 }
 
+#endregion
+
+#region Querying One to One Relationship
+
+void GetAllBooksWithTheirCovers()
+{
+    var booksAndCovers = _context.Books.Include(b => b.Cover).ToList();
+    booksAndCovers.ForEach(book => Console.WriteLine(book.Title + (book.Cover == null ? "No cover yet" : ":" + book.Cover.DesignIdeas)));
+
+    //All Books include cover
+    //_context.Books.Include(b => b.Cover).ToList();
+
+    //All books where cover is not null
+    //_context.Books.Include(b => b.Cover).Where(b => b.Cover != null).ToList();
+
+    //All books where cover is null
+    //_context.Books.Where(b => b.Cover == null).ToList();
+
+    //Project to an anonymous type
+    //_context.Books.Where(b => b.Cover != null).Select(b => new { b.Title, b.Cover.DesignIdeas }).ToList();
+
+}
+
+void MultiLevelInclude()
+{
+    var authorGraph = _context.Authors.AsNoTracking()
+        .Include(a => a.Books)
+        .ThenInclude(b => b.Cover)
+        .ThenInclude(c => c.Artists)
+        .FirstOrDefault(a => a.AuthorId == 1);
+
+    Console.WriteLine(authorGraph?.FirstName + " " + authorGraph?.LastName);
+    foreach (var book in authorGraph.Books)
+    {
+        Console.WriteLine("Book:" + book.Title);
+        if (book.Cover != null)
+        {
+            Console.WriteLine("Design Ideas: " + book.Cover.DesignIdeas);
+            Console.Write("Artist(s):");
+            book.Cover.Artists.ForEach(a => Console.Write(a.LastName + " "));
+
+        }
+    }
+
+    //you can always query from the dependent
+    //_context.Covers.Include(c => c.Book).ThenInclude(b => b.Author).ToList();
+}
+
+//Add new book and cover together
+void newBookAndCover()
+{
+    var book = new Book { AuthorId = 1, Title = "Call Me Ishtar", PublishDate = new DateTime(1973, 1, 1) };
+    book.Cover = new Cover { DesignIdeas = "Image of Ishtar?" };
+    _context.Books.Add(book);
+    _context.SaveChanges();
+}
+
+//Add Cover to exiting Book in Memory
+void AddCoverToExistingBook()
+{
+    var book = _context.Books.Find(1004);
+    book.Cover = new Cover { DesignIdeas = "A Wool scouring pad" };
+    _context.SaveChanges();
+}
+
+void AddCoverToExistingBookThatHasAnUnTrackedCover()
+{
+    // this function will fail because the book already has a cover
+    var book = _context.Books.Find(1002);
+    book.Cover = new Cover { DesignIdeas = "A Spiral" };
+    _context.SaveChanges();
+}
+
+void AddCoverToExistingBookWithTrackedCover()
+{
+    //make sure explisitly add cover in your code so you can find out if the book has cover
+    //this code if the book has cover will delete old cover and replace it with new cover
+    var book = _context.Books.Include(b => b.Cover)
+        .FirstOrDefault(b => b.BookId == 1002);
+    book.Cover = new Cover { DesignIdeas = "A Spiral" };
+    _context.ChangeTracker.DetectChanges();
+    var debugview = _context.ChangeTracker.DebugView.ShortView;
+}
+
+//this will protecting from unique FK
+void ProtectingFromUniqueFK()
+{
+    var TheNeverDesignIdeas = "A spirally spiral";
+    var book = _context.Books.Include(b => b.Cover)
+        .FirstOrDefault(b => b.BookId == 1002);
+    if(book.Cover != null)
+    {
+        book.Cover.DesignIdeas = TheNeverDesignIdeas;
+    }
+    else
+    {
+        book.Cover = new Cover { DesignIdeas = "A spirally spiral" };
+    }
+
+    //the result, if cover is not null, new cover will be added
+    //and if null new cover also will be added
+    //another option is to add confirmation what to do
+}
+
+//replacing or removing one to one behaviour (intentionally)
+//reassigning a cover to Different book
+
+
+//_context.Covers.Remove(greenCover);
+//bookWithCoverGraph.Cover=null;
 #endregion
